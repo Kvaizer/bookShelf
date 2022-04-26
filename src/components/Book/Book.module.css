@@ -1,13 +1,24 @@
+
+
 .bookWrapper {
-    width: 800px;
-    margin: 20px auto;
+    width: 500px;
+    margin:  2rem 2rem;
     display: flex;
     justify-content: space-between;
     border: 3px solid white;
-    padding: 10px 10px;
+    padding: 20px 20px;
     height: 300px;
     border-radius: 20px;
-    padding: 20px;
+    background: black;
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 1;
+}
+
+.bookWrapper:hover {
+    z-index: 100;
+    transform: scale(1.2);
+    background: repeating-linear-gradient(45deg, black, lime);
 }
 
 .title {

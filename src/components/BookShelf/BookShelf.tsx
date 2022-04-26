@@ -11,9 +11,10 @@ type BookShelfPropsType = {
     addBook: (book: BookType) => void
     changeBook: (book: BookType, bookId: string) => void
     removeBook: (bookId: string) => void
+    shelfIndex: number
 }
 
-const BookShelf: React.FC<BookShelfPropsType> = ({books, addBook, changeBook, removeBook}) => {
+const BookShelf: React.FC<BookShelfPropsType> = ({books, addBook, changeBook, removeBook, shelfIndex}) => {
 
     const newBook: BookType = {
         id: v1(),
@@ -43,10 +44,12 @@ const BookShelf: React.FC<BookShelfPropsType> = ({books, addBook, changeBook, re
     }
 
     return (
-        <div className={s.wrapper}>
-            <div>
-                {addMode ? <EditForm info={newBook} closeForm={addModeOff} addBook={addBookHandler}/> : null}
-                {books.map(book => <Book key={book.id} saveChange={saveBookChanges} book={book} removeBook={removeBook}/>)}
+        <div style={{marginTop: shelfIndex * 350}}>
+            <div className={s.shelfWrapper}>
+                {addMode ? <EditForm info={newBook} closeForm={addModeOff} addBook={addBookHandler} /> : null}
+                {
+                    books.map((book, index) => <Book key={book.id} saveChange={saveBookChanges} book={book} removeBook={removeBook} index={index}/>)
+                }
             </div>
             <Button title={'Add Book'} callBack={addModeOn}/>
         </div>
