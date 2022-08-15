@@ -6,20 +6,19 @@
     color: white;
     padding: 10px 20px;
     margin: 10px 20px;
-    border-radius: 50%;
-    font-family: 'FreeMono', monospace;
+    border-radius: 5%;
+    font-family: 'Bahnschrift';
     text-transform: uppercase;
-    letter-spacing: 1px;
-    background-image: linear-gradient(to right, #00ff00 0%, #27a027 51%, #0c140b 100%);
+    background-image: linear-gradient(to right, lime, green);
     background-size: 200% auto;
     box-shadow: 0 0 20px rgba(0, 0, 0, .2);
     transition: .5s;
+    font-size: 12px;
 }
-
-
 
 .default:hover {
     background-position:  right, center;
+    cursor: pointer;
 }
 
 .default:disabled {

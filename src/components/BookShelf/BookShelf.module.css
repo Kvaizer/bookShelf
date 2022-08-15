@@ -1,6 +1,6 @@
 
-
 .shelfWrapper {
+    height: 400px;
     position: relative;
     display: flex;
     flex-wrap: wrap;

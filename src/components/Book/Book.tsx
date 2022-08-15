@@ -1,48 +1,37 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {BookType} from '../../App';
 import s from './Book.module.css'
 import EditForm from '../EditForm/EditForm';
 import Button from '../Button/Button';
+import {changeBookAC, editModeChangeAC, removeBookAC} from '../../state/booksReducer';
+import {useDispatch} from 'react-redux';
 
 type BookPropsType = {
     book: BookType
-    saveChange: (book: BookType, id: string) => void
-    removeBook: (bookId: string) => void
     index: number
 }
 
-const Book: React.FC<BookPropsType> = ({book, saveChange, removeBook, index}) => {
-
-    const [editMode, setEditMode] = useState<boolean>(false)
-    const [zIndex, setIndex] = useState<number>(index)
+const Book: React.FC<BookPropsType> = React.memo(({book, index}) => {
+    const dispatch = useDispatch()
 
     const onClickHandler = () => {
-        setEditMode(true)
+        dispatch(editModeChangeAC(book.id, true))
     }
 
     const onClickSaveBookChanges = (book: BookType) => {
-        saveChange(book, book.id)
+        dispatch(changeBookAC(book.id, book))
     }
 
     const onClickCloseEditForm = () => {
-        setEditMode(false)
+        dispatch(editModeChangeAC(book.id, false))
     }
 
     const onClickRemoveBookHandler = () => {
-        removeBook(book.id)
+        dispatch(removeBookAC(book.id))
     }
-
-    const onMouseEnterHandler = () => {
-        setIndex((index + 1) * 10)
-    }
-
-    const onMouseLeaveHandler = () => {
-        setIndex(index)
-    }
-
 
     return (
-        <div onMouseEnter={onMouseEnterHandler} onMouseLeave={onMouseLeaveHandler} style={{position: 'absolute', top: '150px', left: '400px', marginLeft: index * 100}}>
+        <div style={{position: 'absolute', top: '25px', left: '500px', marginLeft: index * 80}}>
             <div className={s.bookWrapper}>
                 <div className={s.pictureOfBook}><img src={book.pictureOfBook} width={200} height={'auto'}/></div>
                 <div className={s.title}>{book.title}</div>
@@ -53,13 +42,15 @@ const Book: React.FC<BookPropsType> = ({book, saveChange, removeBook, index}) =>
                         <Button title={'Edit'} callBack={onClickHandler}/>
                         <Button title={'Delete'} callBack={onClickRemoveBookHandler}/>
                     </div>
-                    {editMode ? <EditForm saveChange={onClickSaveBookChanges} closeForm={onClickCloseEditForm}
-                                          info={book}/> : ''}
                 </div>
             </div>
+            {book.editMode ? <EditForm
+                saveChange={onClickSaveBookChanges}
+                closeForm={onClickCloseEditForm}
+                info={book}/> : ''}
         </div>
 
     );
-};
+});
 
 export default Book;
